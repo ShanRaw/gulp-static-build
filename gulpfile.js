@@ -11,6 +11,7 @@ const PUBLIC_PATH = '';//cdn连接地址
 const SOURCE_PATH = 'src';//源码地址
 const DIST_PATH = 'copy_src_dist';//处理目录  明白不能重复
 const SAVE_PATH = 'cdn';//处理目录  明白不能重复
+const IGNORE_LIST = [/^\/favicon.ico$/g, /^\/index.html/g, 'Dockerfile'];//忽略处理的文件 可以使用正则
 
 
 gulp.task('css', function async() {
@@ -44,7 +45,7 @@ gulp.task('clean', () => {
 gulp.task('cdn', function () {
   return gulp.src(`${DIST_PATH}/**`)
     .pipe(RevAll.revision({
-      dontRenameFile: [/^\/favicon.ico$/g, /^\/index.html/g],
+      dontRenameFile: IGNORE_LIST,
       fileNameVersion: 'v1',
       // prefix: PUBLIC_PATH,
       transformPath: function (rev, source, path) {
