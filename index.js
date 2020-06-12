@@ -28,7 +28,7 @@ function init() {
 function build() {
   const flag = fs.existsSync('./.gulpStaticJson.json');
   if (!flag) {
-    console.log('请先执行 htmlbuild init   生成配置文件');
+    return  console.log('请先执行 htmlbuild init   生成配置文件');
   }
   const json = fs.readFileSync('./.gulpStaticJson.json', 'utf8');
   const config = JSON.parse(json || '{}');
