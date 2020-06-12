@@ -28,7 +28,7 @@ function build() {
   const json = fs.readFileSync('./.gulpStaticJson.json', 'utf8');
   const config = JSON.parse(json || '{}');
   if (!config.SOURCE_PATH) {
-    return throw ('源码地址不能为空');
+    return Error('源码地址不能为空');
   }
   process.argv.push(
     '--gulpfile',
