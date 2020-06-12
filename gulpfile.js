@@ -7,7 +7,7 @@ const gulp = require("gulp"),
   notify = require('gulp-notify'),
   del = require('del'), fs = require('fs'), path = require('path');
 
-const json = fs.readFileSync(path.join(process.env.PJ_PATH, '.gulpStaticJson.json'), 'utf8');
+const json = fs.readFileSync('.gulpStaticJson.json', 'utf8');
 const config = JSON.parse(json || '{}');
 
 const PUBLIC_PATH = config.PUBLIC_PATH || '';//cdn连接地址
