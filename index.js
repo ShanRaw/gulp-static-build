@@ -4,7 +4,6 @@ const fs = require('fs');
 const params = process.argv[2];
 const pkg = require('./package');
 const path = require('path');
-const {exec} = require('child_process');
 
 /**
  * @name 初始化
@@ -34,14 +33,12 @@ function build() {
   }
   process.env.PJ_PATH = config.SOURCE_PATH;
   // process.argv.splice(1, 1);
-  // process.argv.push(
-  //   '--gulpfile',
-  //   // __dirname是全局变量，表示当前文件所在目录
-  //   path.join(__dirname, 'gulpfile.js')
-  // );
-  exec(`cd ${__dirname}`, function (error, stdout, stderr) {
-    exec(`gulp build`);
-  });
+  process.argv.push(
+    '--gulpfile',
+    // __dirname是全局变量，表示当前文件所在目录
+    path.join(__dirname, 'gulpfile.js')
+  );
+  require('gulp/bin/gulp');
 
 }
 

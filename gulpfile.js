@@ -7,7 +7,7 @@ const gulp = require("gulp"),
   notify = require('gulp-notify'),
   del = require('del'), fs = require('fs'), path = require('path');
 
-const json = fs.readFileSync('.gulpStaticJson.json', 'utf8');
+const json = fs.readFileSync(path.join(process.env.PJ_PATH, '.gulpStaticJson.json'), 'utf8');
 const config = JSON.parse(json || '{}');
 
 const PUBLIC_PATH = config.PUBLIC_PATH || '';//cdn连接地址
@@ -28,9 +28,10 @@ gulp.task('css', function async() {
 // js 代码合并和压缩
 gulp.task('js', function () {
   return gulp.src(`${SOURCE_PATH}/**/*.js`, {allowEmpty: true})
-    .pipe(babel({
-      presets: 'es2015'
-    }))
+  // .pipe(babel({
+  //   presets: 'es2015'
+  // }))
+    .pipe(babel())
     .pipe(uglify())
     .pipe(gulp.dest(DIST_PATH))
     .pipe(notify({message: 'js 文件编译完成'}));
