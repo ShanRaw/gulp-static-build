@@ -32,6 +32,7 @@ function build() {
     return Error('源码地址不能为空');
   }
   process.env.PJ_PATH = config.SOURCE_PATH;
+  // process.argv.splice(1, 1);
   process.argv.push(
     '--gulpfile',
     // __dirname是全局变量，表示当前文件所在目录

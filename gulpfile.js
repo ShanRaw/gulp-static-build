@@ -61,7 +61,7 @@ gulp.task('cdn', function () {
 });
 
 // 设置默认任务（default）
-gulp.task('default', gulp.series('clean', 'copyAll', gulp.parallel('css', 'js'), 'cdn', (done) => {
+gulp.task('build', gulp.series('clean', 'copyAll', gulp.parallel('css', 'js'), 'cdn', (done) => {
   console.log('----------success-------------');
   console.info(`    执行完毕,代码存放${SAVE_PATH}    `);
   console.log('----------success-------------');
