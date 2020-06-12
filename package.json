@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "autoBuild": "./index.js"
+    "htmlbuild": "./index.js"
   },
   "author": "",
   "license": "ISC",
