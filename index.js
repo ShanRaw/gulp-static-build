@@ -4,6 +4,7 @@ const fs = require('fs');
 const params = process.argv[2];
 const pkg = require('./package');
 const path = require('path');
+const {exec} = require('child_process');
 
 /**
  * @name 初始化
@@ -38,8 +39,9 @@ function build() {
     // __dirname是全局变量，表示当前文件所在目录
     path.join(__dirname, 'gulpfile.js')
   );
-
-  require('gulp/bin/gulp');
+  exec(`cd ${__dirname}`, function (error, stdout, stderr) {
+    require('gulp/bin/gulp');
+  });
 
 }
 
