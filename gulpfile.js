@@ -5,13 +5,17 @@ const gulp = require("gulp"),
   autoprefixer = require('gulp-autoprefixer'),
   uglify = require('gulp-uglify'),
   notify = require('gulp-notify'),
-  del = require('del');
+  del = require('del'), fs = require('fs'), path = require('path');
 
-const PUBLIC_PATH = '';//cdn连接地址
-const SOURCE_PATH = 'src';//源码地址
-const DIST_PATH = 'copy_src_dist';//处理目录  明白不能重复
-const SAVE_PATH = 'cdn';//处理目录  明白不能重复
-const IGNORE_LIST = [/^\/favicon.ico$/g, /^\/index.html/g, 'Dockerfile'];//忽略处理的文件 可以使用正则
+const json = fs.readFileSync('./.gulpStaticJson.json', 'utf8');
+const config = JSON.parse(json || '{}');
+
+const PUBLIC_PATH = config.PUBLIC_PATH || '';//cdn连接地址
+const SOURCE_PATH = config.SOURCE_PATH || 'src';//源码地址
+const DIST_PATH = config.DIST_PATH || 'copy_src_dist';//处理目录  明白不能重复
+const SAVE_PATH = path.join(PUBLIC_PATH, config.SAVE_PATH || 'cdn');//保存地址
+const IGNORE_LIST = config.IGNORE_LIST || [/^\/favicon.ico$/g, /^\/index.html/g, 'Dockerfile', '.gulpStaticJson.json', /node_modules/g];//忽略处理的文件 可以使用正则
+
 
 
 gulp.task('css', function async() {
@@ -35,7 +39,7 @@ gulp.task('js', function () {
 
 
 gulp.task('copyAll', function () {
-  return gulp.src(`${SOURCE_PATH}/**`).pipe(gulp.dest(DIST_PATH)).pipe(notify({message: 'copy文件完成'}));
+  return gulp.src([`${SOURCE_PATH}/**`, `!${SOURCE_PATH}/node_modules/**`, `!${SOURCE_PATH}/Dockerfile`]).pipe(gulp.dest(DIST_PATH)).pipe(notify({message: 'copy文件完成'}));
 });
 
 gulp.task('clean', () => {
