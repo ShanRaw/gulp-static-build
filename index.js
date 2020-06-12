@@ -36,6 +36,7 @@ function build() {
     // __dirname是全局变量，表示当前文件所在目录
     path.resolve(__dirname, '../gulpfile.js')
   );
+  console.log(path.resolve(__dirname, '../gulpfile.js'));
   require('gulp/bin/gulp');
 
 }
