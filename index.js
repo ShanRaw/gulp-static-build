@@ -34,14 +34,13 @@ function build() {
   }
   process.env.PJ_PATH = config.SOURCE_PATH;
   // process.argv.splice(1, 1);
+  process.argv[0] = __dirname;
   process.argv.push(
     '--gulpfile',
     // __dirname是全局变量，表示当前文件所在目录
     path.join(__dirname, 'gulpfile.js')
   );
-  exec(`cd ${__dirname}`, function (error, stdout, stderr) {
-    require('gulp/bin/gulp');
-  });
+  require('gulp/bin/gulp');
 
 }
 
