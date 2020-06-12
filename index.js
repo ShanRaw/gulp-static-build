@@ -37,9 +37,9 @@ function build() {
     path.resolve(__dirname, '../gulpfile.js')
   );
   console.log('路径');
-  console.log(path.resolve(__dirname, '../gulpfile.js'));
+  console.log(path.resolve(__dirname, '/gulpfile.js'));
   console.log('路径end');
-  // require('gulp/bin/gulp');
+  require('gulp/bin/gulp');
 
 }
 
