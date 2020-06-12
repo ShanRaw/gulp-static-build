@@ -31,10 +31,11 @@ function build() {
   if (!config.SOURCE_PATH) {
     return Error('源码地址不能为空');
   }
+  process.env.PJ_PATH = config.SOURCE_PATH;
   process.argv.push(
     '--gulpfile',
     // __dirname是全局变量，表示当前文件所在目录
-    path.join(__dirname, '/gulpfile.js')
+    path.join(__dirname, 'gulpfile.js')
   );
 
   require('gulp/bin/gulp');

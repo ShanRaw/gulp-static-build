@@ -7,7 +7,7 @@ const gulp = require("gulp"),
   notify = require('gulp-notify'),
   del = require('del'), fs = require('fs'), path = require('path');
 
-const json = fs.readFileSync('./.gulpStaticJson.json', 'utf8');
+const json = fs.readFileSync(path.join(process.env.PJ_PATH, '.gulpStaticJson.json'), 'utf8');
 const config = JSON.parse(json || '{}');
 
 const PUBLIC_PATH = config.PUBLIC_PATH || '';//cdn连接地址
@@ -15,7 +15,6 @@ const SOURCE_PATH = config.SOURCE_PATH || 'src';//源码地址
 const DIST_PATH = config.DIST_PATH || 'copy_src_dist';//处理目录  明白不能重复
 const SAVE_PATH = path.join(PUBLIC_PATH, config.SAVE_PATH || 'cdn');//保存地址
 const IGNORE_LIST = config.IGNORE_LIST || [/^\/favicon.ico$/g, /^\/index.html/g, 'Dockerfile', '.gulpStaticJson.json', /node_modules/g];//忽略处理的文件 可以使用正则
-
 
 
 gulp.task('css', function async() {
