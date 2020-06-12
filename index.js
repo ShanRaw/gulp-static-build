@@ -3,17 +3,18 @@
 const fs = require('fs');
 const params = process.argv[2];
 const pkg = require('./package');
+const path = require('path');
 
 /**
  * @name 初始化
  */
 function init() {
   const res = fs.writeFileSync('./.gulpStaticJson.json', `{
-  "PUBLIC_PATH": "",//cdn地址
-  "SOURCE_PATH": "",//源码地址 必须为根路径
-  "DIST_PATH": "copy_src_dist",//处理目录
-  "SAVE_PATH": "src",//编译后的保存目录 相对于SOURCE_PATH的目录
-  "IGNORE_LIST": "[/^\\/favicon.ico$/g, /^\\/index.html/g, 'Dockerfile']"//忽略文件
+  "PUBLIC_PATH": "cdn地址",
+  "SOURCE_PATH": "源码地址 必须为根路径",
+  "DIST_PATH": "处理目录 默认为copy_src_dist",
+  "SAVE_PATH": "编译后的保存目录 相对于SOURCE_PATH的目录 模式为src",
+  "IGNORE_LIST": "[/^\\/favicon.ico$/g, /^\\/index.html/g, 'Dockerfile']"
 }`, {encoding: 'utf8'});
   if (res) {
     throw Error(res);
