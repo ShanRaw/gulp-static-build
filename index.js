@@ -13,8 +13,7 @@ function init() {
   "PUBLIC_PATH": "cdn地址",
   "SOURCE_PATH": "源码地址 必须为根路径",
   "DIST_PATH": "处理目录 默认为copy_src_dist",
-  "SAVE_PATH": "编译后的保存目录 相对于SOURCE_PATH的目录 模式为src",
-  "IGNORE_LIST": "[/^\\/favicon.ico$/g, /^\\/index.html/g, 'Dockerfile']"
+  "SAVE_PATH": "编译后的保存目录 相对于SOURCE_PATH的目录 模式为src"
 }`, {encoding: 'utf8'});
   if (res) {
     throw Error(res);
