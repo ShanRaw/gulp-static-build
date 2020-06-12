@@ -14,11 +14,11 @@ const PUBLIC_PATH = config.PUBLIC_PATH || '';//cdn连接地址
 const SOURCE_PATH = config.SOURCE_PATH || 'src';//源码地址
 const DIST_PATH = config.DIST_PATH || 'copy_src_dist';//处理目录  明白不能重复
 const SAVE_PATH = path.join(PUBLIC_PATH, config.SAVE_PATH || 'cdn');//保存地址
-const IGNORE_LIST = config.IGNORE_LIST || [/^\/favicon.ico$/g, /^\/index.html/g, 'Dockerfile', '.gulpStaticJson.json', /node_modules/g];//忽略处理的文件 可以使用正则
+const IGNORE_LIST = [/^\/favicon.ico$/g, /^\/index.html/g, 'Dockerfile', '.gulpStaticJson.json'].concat(config.IGNORE_LIST || []);//忽略处理的文件 可以使用正则
 
 
 gulp.task('css', function async() {
-  return gulp.src(`${SOURCE_PATH}/**/*.css`)
+  return gulp.src(`${DIST_PATH}/**/*.css`)
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
     .pipe(cleanCSS())
     .pipe(gulp.dest(DIST_PATH))
@@ -27,11 +27,11 @@ gulp.task('css', function async() {
 
 // js 代码合并和压缩
 gulp.task('js', function () {
-  return gulp.src(`${SOURCE_PATH}/**/*.js`, {allowEmpty: true})
-  // .pipe(babel({
-  //   presets: 'es2015'
-  // }))
-    .pipe(babel())
+  return gulp.src(`${DIST_PATH}/**/*.js`, {allowEmpty: true})
+    .pipe(babel({
+      presets: 'es2015'
+    }))
+    // .pipe(babel())
     .pipe(uglify())
     .pipe(gulp.dest(DIST_PATH))
     .pipe(notify({message: 'js 文件编译完成'}));
@@ -39,11 +39,11 @@ gulp.task('js', function () {
 
 
 gulp.task('copyAll', function () {
-  return gulp.src([`${SOURCE_PATH}/**`, `!${SOURCE_PATH}/node_modules/**`, `!${SOURCE_PATH}/Dockerfile`]).pipe(gulp.dest(DIST_PATH)).pipe(notify({message: 'copy文件完成'}));
+  return gulp.src([`${SOURCE_PATH}/**`, `!${SOURCE_PATH}/node_modules/**`, `!Dockerfile`]).pipe(gulp.dest(DIST_PATH)).pipe(notify({message: 'copy文件完成'}));
 });
 
 gulp.task('clean', () => {
-  return del([DIST_PATH, SAVE_PATH]);
+  return del([DIST_PATH, path.join(SOURCE_PATH, SAVE_PATH)], {force: true});
 });
 
 gulp.task('cdn', function () {
@@ -58,7 +58,7 @@ gulp.task('cdn', function () {
         return `${PUBLIC_PATH}${pathUrl}`;
       },
     }))
-    .pipe(gulp.dest(SAVE_PATH)).pipe(notify({message: 'cdn完成'}));
+    .pipe(gulp.dest(path.join(SOURCE_PATH, SAVE_PATH))).pipe(notify({message: 'cdn完成'}));
 });
 
 // 设置默认任务（default）

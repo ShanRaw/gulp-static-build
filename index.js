@@ -19,13 +19,17 @@ function init() {
   if (res) {
     throw Error(res);
   }
-  return console.log('success');
+  return console.log('success  .gulpStaticJson.json已生成(项目根目录)');
 }
 
 /**
  * @name 编译
  */
 function build() {
+  const flag = fs.existsSync('./.gulpStaticJson.json');
+  if (!flag) {
+    console.log('请先执行 htmlbuild init   生成配置文件');
+  }
   const json = fs.readFileSync('./.gulpStaticJson.json', 'utf8');
   const config = JSON.parse(json || '{}');
   if (!config.SOURCE_PATH) {
