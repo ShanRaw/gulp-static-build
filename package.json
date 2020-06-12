@@ -2,9 +2,9 @@
   "name": "gulp-static-build",
   "version": "1.0.0",
   "description": "",
-  "main": "gulpfile.js",
+  "main": "index.js",
   "bin": {
-    "sac": "./index.js"
+    "autoBuild": "./index.js"
   },
   "author": "",
   "license": "ISC",
