@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
-  "scripts": {
-    "build": "gulp"
-  },
   "bin": {
     "sac": "./index.js"
   },
