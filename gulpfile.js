@@ -50,7 +50,6 @@ gulp.task('cdn', function () {
   return gulp.src(`${DIST_PATH}/**`)
     .pipe(RevAll.revision({
       dontRenameFile: IGNORE_LIST,
-      fileNameVersion: 'v1',
       // prefix: PUBLIC_PATH,
       transformPath: function (rev, source, path) {
         const pathUrlArr = path.path.split(DIST_PATH);
