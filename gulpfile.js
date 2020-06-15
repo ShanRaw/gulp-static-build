@@ -7,16 +7,24 @@ const gulp = require("gulp"),
   notify = require('gulp-notify'),
   del = require('del'), fs = require('fs'), path = require('path');
 
-const json = fs.readFileSync(path.join(process.env.PJ_PATH, '.gulpStaticJson.json'), 'utf8');
+
+const json = fs.readFileSync(path.join(process.env.PJ_PATH, process.env.JSON_PATH), 'utf8');
 const config = JSON.parse(json || '{}');
-config.IGNORE_LIST=config.IGNORE_LIST||[];
-ignoreList=config.IGNORE_LIST.concat([/^\/favicon.ico$/g, 'Dockerfile', '.gulpStaticJson.json']);
+
+config.IGNORE_LIST = config.IGNORE_LIST || [];
+ignoreList = config.IGNORE_LIST.concat([/^\/favicon.ico$/g, 'Dockerfile', '.gulpStaticJson.json']);
 
 const PUBLIC_PATH = config.PUBLIC_PATH || '';//cdn连接地址
 const SOURCE_PATH = config.SOURCE_PATH || 'src';//源码地址
 const DIST_PATH = config.DIST_PATH || 'copy_src_dist';//处理目录  明白不能重复
 const SAVE_PATH = path.join(SOURCE_PATH, config.SAVE_PATH || 'cdn');//保存地址
 const IGNORE_LIST = ignoreList;//忽略处理的文件 可以使用正则
+
+let CopyPath=[`${SOURCE_PATH}/**`, `!${SOURCE_PATH}/node_modules/**`, `!Dockerfile`];
+
+CopyPath=CopyPath.concat(config.IGNORE_CALC||[]);
+
+console.log(CopyPath);
 
 
 gulp.task('css', function async() {
@@ -33,7 +41,6 @@ gulp.task('js', function () {
     .pipe(babel({
       presets: 'es2015'
     }))
-    // .pipe(babel())
     .pipe(uglify())
     .pipe(gulp.dest(DIST_PATH))
     .pipe(notify({message: 'js 文件编译完成'}));
@@ -41,11 +48,11 @@ gulp.task('js', function () {
 
 
 gulp.task('copyAll', function () {
-  return gulp.src([`${SOURCE_PATH}/**`, `!${SOURCE_PATH}/node_modules/**`, `!Dockerfile`]).pipe(gulp.dest(DIST_PATH)).pipe(notify({message: 'copy文件完成'}));
+  return gulp.src(CopyPath).pipe(gulp.dest(DIST_PATH)).pipe(notify({message: 'copy文件完成'}));
 });
 
 gulp.task('clean', () => {
-  return del([DIST_PATH,SAVE_PATH], {force: true});
+  return del([DIST_PATH, SAVE_PATH], {force: true});
 });
 
 gulp.task('cdn', function () {

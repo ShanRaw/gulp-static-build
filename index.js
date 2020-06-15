@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const params = process.argv[2];
+const jsonPath = process.argv[3];
 const pkg = require('./package');
 const path = require('path');
 
@@ -14,7 +15,8 @@ function init() {
   "SOURCE_PATH": "源码地址 必须为根路径",
   "DIST_PATH": "处理目录 默认为copy_src_dist",
   "SAVE_PATH": "编译后的保存目录 相对于SOURCE_PATH的目录 模式为src",
-  "IGNORE_LIST":["index.html"]
+  "IGNORE_LIST":["index.html"],
+  "IGNORE_CALC":['cdn']
 }`, {encoding: 'utf8'});
   if (res) {
     throw Error(res);
@@ -26,17 +28,20 @@ function init() {
  * @name 编译
  */
 function build() {
-  const flag = fs.existsSync('./.gulpStaticJson.json');
+  const json_path = jsonPath || '.gulpStaticJson.json';
+  const flag = fs.existsSync(json_path);
   if (!flag) {
-    return  console.log('请先执行 htmlbuild init   生成配置文件');
+    return console.log('请先执行 htmlbuild init   生成配置文件');
   }
-  const json = fs.readFileSync('./.gulpStaticJson.json', 'utf8');
+  const json = fs.readFileSync(json_path, 'utf8');
   const config = JSON.parse(json || '{}');
   if (!config.SOURCE_PATH) {
     return Error('源码地址不能为空');
   }
   process.env.PJ_PATH = config.SOURCE_PATH;
-  // process.argv.splice(1, 1);
+  process.env.JSON_PATH = json_path;
+  // process.argv.splice(2, 1);
+  process.argv.pop();
   process.argv.push(
     '--gulpfile',
     // __dirname是全局变量，表示当前文件所在目录
