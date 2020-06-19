@@ -38,8 +38,9 @@ function build() {
   if (!config.SOURCE_PATH) {
     return Error('源码地址不能为空');
   }
-  process.env.PJ_PATH = config.SOURCE_PATH;
+
   process.env.JSON_PATH = json_path;
+  process.env.PWD_PATH = process.cwd();
   // process.argv.splice(2, 1);
   process.argv.pop();
   process.argv.push(
