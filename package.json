@@ -1,6 +1,6 @@
 {
   "name": "gulp-static-build",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-transform-object-assign": "^7.10.4",
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
@@ -16,7 +17,7 @@
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
-    "gulp-babel": "^7.0.1",
+    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-notify": "^3.2.0",
     "gulp-rev-all": "^2.0.3",

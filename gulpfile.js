@@ -50,7 +50,8 @@ gulp.task('css', function async() {
 gulp.task('js', function () {
   return gulp.src(`${DIST_PATH}/**/*.js`, {allowEmpty: true})
     .pipe(babel({
-      presets: 'es2015'
+      presets: ['@babel/env'],
+      plugins: ['@babel/plugin-transform-object-assign']
     }))
     .pipe(uglify())
     .pipe(gulp.dest(DIST_PATH))
