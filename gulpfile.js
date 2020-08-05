@@ -7,7 +7,7 @@ const gulp = require("gulp"),
   notify = require('gulp-notify'),
   del = require('del'), fs = require('fs'), path = require('path');
 
-const PWD_PATH= process.env.PWD_PATH;
+const PWD_PATH = process.env.PWD_PATH;
 console.log(PWD_PATH);
 const json = fs.readFileSync(path.join(PWD_PATH, process.env.JSON_PATH), 'utf8');
 const config = JSON.parse(json || '{}');
@@ -16,26 +16,26 @@ config.IGNORE_LIST = config.IGNORE_LIST || [];
 ignoreList = config.IGNORE_LIST.concat([/^\/favicon.ico$/g, 'Dockerfile', '.gulpStaticJson.json']);
 
 const PUBLIC_PATH = config.PUBLIC_PATH || '';//cdn连接地址
-const SOURCE_PATH = path.join(PWD_PATH,config.SOURCE_PATH||'src');//源码地址
+const SOURCE_PATH = path.join(PWD_PATH, config.SOURCE_PATH || 'src');//源码地址
 const DIST_PATH = config.DIST_PATH || 'copy_src_dist';//处理目录  明白不能重复
 const SAVE_PATH = path.join(SOURCE_PATH, config.SAVE_PATH || 'cdn');//保存地址
 const IGNORE_LIST = ignoreList;//忽略处理的文件 可以使用正则
 
-let CopyPath=[`${SOURCE_PATH}/**`, `!${SOURCE_PATH}/node_modules/**`, `!Dockerfile`];
+let CopyPath = [`${SOURCE_PATH}/**`, `!${SOURCE_PATH}/node_modules/**`, `!Dockerfile`];
 
-config.IGNORE_CALC=config.IGNORE_CALC.map((item)=>{
-  return `!${path.join(SOURCE_PATH,item)}`
+config.IGNORE_CALC = config.IGNORE_CALC.map((item) => {
+  return `!${path.join(SOURCE_PATH, item)}`
 })
 
 
-CopyPath=CopyPath.concat(config.IGNORE_CALC||[]);
+CopyPath = CopyPath.concat(config.IGNORE_CALC || []);
 
-console.log('CopyPath',CopyPath);
-console.log('PUBLIC_PATH',PUBLIC_PATH);
-console.log('SOURCE_PATH',SOURCE_PATH);
-console.log('DIST_PATH',DIST_PATH);
-console.log('SAVE_PATH',SAVE_PATH);
-console.log('IGNORE_LIST',IGNORE_LIST);
+console.log('CopyPath', CopyPath);
+console.log('PUBLIC_PATH', PUBLIC_PATH);
+console.log('SOURCE_PATH', SOURCE_PATH);
+console.log('DIST_PATH', DIST_PATH);
+console.log('SAVE_PATH', SAVE_PATH);
+console.log('IGNORE_LIST', IGNORE_LIST);
 
 
 gulp.task('css', function async() {
@@ -50,8 +50,9 @@ gulp.task('css', function async() {
 gulp.task('js', function () {
   return gulp.src(`${DIST_PATH}/**/*.js`, {allowEmpty: true})
     .pipe(babel({
-      presets: ['@babel/env'],
-      plugins: ['@babel/plugin-transform-object-assign']
+      presets: ['@babel/preset-es2015'],
+      // presets: ['@babel/env'],
+      // plugins: ['@babel/plugin-transform-object-assign']
     }))
     .pipe(uglify())
     .pipe(gulp.dest(DIST_PATH))
