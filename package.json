@@ -1,6 +1,6 @@
 {
   "name": "gulp-static-build",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -12,7 +12,6 @@
     "@babel/core": "^7.11.1",
     "@babel/plugin-transform-object-assign": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
-    "@babel/preset-es2015": "^7.0.0-beta.53",
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
