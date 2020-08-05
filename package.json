@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/core": "^7.11.1",
     "@babel/plugin-transform-object-assign": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
