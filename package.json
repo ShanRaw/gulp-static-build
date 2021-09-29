@@ -1,5 +1,5 @@
 {
-  "name": "gulp-static-build",
+  "name": "@jysd/gulp-static-build",
   "version": "1.0.5",
   "description": "",
   "main": "index.js",
