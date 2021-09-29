@@ -4,6 +4,7 @@ const gulp = require("gulp"),
   cleanCSS = require('gulp-clean-css'),
   autoprefixer = require('gulp-autoprefixer'),
   uglify = require('gulp-uglify'),
+  gulpIgnore = require('gulp-ignore'),
   notify = require('gulp-notify'),
   browserify = require('gulp-browserify'),
   del = require('del'), fs = require('fs'), path = require('path');
@@ -46,7 +47,12 @@ gulp.task('css', function async() {
     .pipe(gulp.dest(DIST_PATH))
     .pipe(notify({message: 'css 文件压缩完成'}));
 });
-
+var gulpIgnoreCondition = function(f){
+  if(f.path.indexOf('.min.js') != -1){
+      return true;
+  }
+  return false
+};
 // js 代码合并和压缩
 gulp.task('js', function () {
   return gulp.src(`${DIST_PATH}/**/*.js`, {allowEmpty: true})
@@ -55,6 +61,7 @@ gulp.task('js', function () {
       plugins: ['@babel/plugin-transform-object-assign',['@babel/transform-runtime']]
     }))
     .pipe(browserify())
+    .pipe(gulpIgnore.exclude(gulpIgnoreCondition))
     .pipe(uglify({mangle: {reserved: ['require' ,'exports' ,'module' ,'$', 'jQuery','_','moment']}}))
     .pipe(gulp.dest(DIST_PATH))
     .pipe(notify({message: 'js 文件编译完成'}));
