@@ -5,6 +5,7 @@ const gulp = require("gulp"),
   autoprefixer = require('gulp-autoprefixer'),
   uglify = require('gulp-uglify'),
   notify = require('gulp-notify'),
+  browserify = require('gulp-browserify'),
   del = require('del'), fs = require('fs'), path = require('path');
 
 const PWD_PATH= process.env.PWD_PATH;
@@ -51,8 +52,9 @@ gulp.task('js', function () {
   return gulp.src(`${DIST_PATH}/**/*.js`, {allowEmpty: true})
     .pipe(babel({
       presets: ['@babel/env'],
-      plugins: ['@babel/plugin-transform-object-assign']
+      plugins: ['@babel/plugin-transform-object-assign',['@babel/transform-runtime']]
     }))
+    .pipe(browserify())
     .pipe(uglify())
     .pipe(gulp.dest(DIST_PATH))
     .pipe(notify({message: 'js 文件编译完成'}));
