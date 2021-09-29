@@ -55,7 +55,7 @@ gulp.task('js', function () {
       plugins: ['@babel/plugin-transform-object-assign',['@babel/transform-runtime']]
     }))
     .pipe(browserify())
-    .pipe(uglify())
+    .pipe(uglify({mangle: {reserved: ['require' ,'exports' ,'module' ,'$', 'jQuery','_','moment']}}))
     .pipe(gulp.dest(DIST_PATH))
     .pipe(notify({message: 'js 文件编译完成'}));
 });
